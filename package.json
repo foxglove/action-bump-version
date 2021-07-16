@@ -1,0 +1,46 @@
+{
+  "name": "@foxglove/template",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foxglove/template.git"
+  },
+  "author": {
+    "name": "Foxglove",
+    "email": "contact@foxglove.dev",
+    "url": "https://foxglove.dev/"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "prepack": "tsc -b",
+    "clean": "tsc -b --clean",
+    "lint": "eslint --report-unused-disable-directives --fix .",
+    "lint:ci": "eslint --report-unused-disable-directives .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@foxglove/eslint-plugin": "0.12.0",
+    "@foxglove/tsconfig": "1.0.0",
+    "@types/jest": "26.0.23",
+    "@typescript-eslint/eslint-plugin": "4.28.1",
+    "@typescript-eslint/parser": "4.28.1",
+    "esbuild-jest": "0.5.0",
+    "eslint": "7.29.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-jest": "24.3.6",
+    "eslint-plugin-prettier": "3.4.0",
+    "jest": "27.0.6",
+    "jest-ts-webcompat-resolver": "^1.0.0",
+    "prettier": "2.3.2",
+    "typescript": "4.3.5"
+  }
+}
