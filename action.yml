@@ -1,0 +1,26 @@
+name: "Bump Version"
+description: "Update package.json versions in a monorepo"
+inputs:
+  version:
+    description: "New version string"
+    required: true
+  commit-message:
+    description: "Commit message (default: `Release v1.2.3`)"
+  branch:
+    description: "Create branch before committing new version"
+    default: false
+  branch-name:
+    description: "Name of new branch (default: `release/v1.2.3`)"
+  push:
+    description: "Push to remote after committing new version"
+    default: false
+outputs:
+  version:
+    description: "Normalized version string"
+  branch-name:
+    description: "Name of release branch if created"
+  updated-files:
+    description: "Array of paths to updated package.json files"
+runs:
+  using: "node16"
+  main: "dist/index.js"
