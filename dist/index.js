@@ -3724,7 +3724,6 @@ var import_semver = __toModule(require_semver2());
 var PrettyError = class extends Error {
 };
 async function main() {
-  var _a, _b;
   const version = sanitizeVersion(import_core.default.getInput("version", { required: true }));
   import_core.default.setOutput("version", version);
   const gitStatus = await execOutput("git", ["status", "--porcelain"]);
@@ -3734,14 +3733,14 @@ async function main() {
 ${gitStatus}`);
   }
   if (import_core.default.getBooleanInput("branch")) {
-    const branchName = (_a = import_core.default.getInput("branch-name")) != null ? _a : `release/v${version}`;
+    const branchName = import_core.default.getInput("branch-name") || `release/v${version}`;
     await (0, import_exec.exec)("git", ["checkout", "-B", branchName]);
     import_core.default.setOutput("branch-name", branchName);
   }
   const updatedFiles = await recursiveUpdatePackageVersion(".", version);
   import_core.default.setOutput("updated-files", updatedFiles);
   await (0, import_exec.exec)("git", ["add", ...updatedFiles]);
-  const commitMessage = (_b = import_core.default.getInput("commit-message")) != null ? _b : `Release v${version}`;
+  const commitMessage = import_core.default.getInput("commit-message") || `Release v${version}`;
   await (0, import_exec.exec)("git", ["commit", "--message", commitMessage]);
   if (import_core.default.getBooleanInput("push")) {
     await (0, import_exec.exec)("git", ["push", "--set-upstream", "origin", "HEAD"]);

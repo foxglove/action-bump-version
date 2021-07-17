@@ -23,7 +23,7 @@ async function main(): Promise<void> {
 
   // create branch if requested
   if (core.getBooleanInput("branch")) {
-    const branchName = core.getInput("branch-name") ?? `release/v${version}`;
+    const branchName = core.getInput("branch-name") || `release/v${version}`;
     await exec("git", ["checkout", "-B", branchName]);
     core.setOutput("branch-name", branchName);
   }
@@ -34,7 +34,7 @@ async function main(): Promise<void> {
   await exec("git", ["add", ...updatedFiles]);
 
   // commit changes
-  const commitMessage = core.getInput("commit-message") ?? `Release v${version}`;
+  const commitMessage = core.getInput("commit-message") || `Release v${version}`;
   await exec("git", ["commit", "--message", commitMessage]);
 
   // push to origin if requested
