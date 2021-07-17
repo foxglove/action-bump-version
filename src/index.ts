@@ -67,7 +67,7 @@ export async function execOutput(
 }
 
 function sanitizeVersion(version: string): string {
-  const result = semver.valid(version);
+  const result = semver.clean(version);
 
   if (!result) {
     throw new PrettyError(`Invalid version: ${version}`);
