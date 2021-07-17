@@ -21,8 +21,26 @@ async function main(): Promise<void> {
     );
   }
 
+  // create branch if requested
+  if (core.getBooleanInput("branch")) {
+    const branchName = core.getInput("branch-name") ?? `release/v${version}`;
+    await exec("git", ["checkout", "-B", branchName]);
+    core.setOutput("branch-name", branchName);
+  }
+
+  // update package version
   const updatedFiles = await recursiveUpdatePackageVersion(".", version);
+  core.setOutput("updated-files", updatedFiles);
   await exec("git", ["add", ...updatedFiles]);
+
+  // commit changes
+  const commitMessage = core.getInput("commit-message") ?? `Release v${version}`;
+  await exec("git", ["commit", "--message", commitMessage]);
+
+  // push to origin if requested
+  if (core.getBooleanInput("push")) {
+    await exec("git", ["push", "origin", "HEAD"]);
+  }
 }
 
 export async function execOutput(
