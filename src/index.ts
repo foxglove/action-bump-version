@@ -30,8 +30,12 @@ async function main(): Promise<void> {
 
   // update package version
   const updatedFiles = await recursiveUpdatePackageVersion(".", version);
+  if (updatedFiles.length === 0) {
+    throw new PrettyError("No package.json files updated");
+  }
   core.setOutput("updated-files", updatedFiles);
   await exec("git", ["add", ...updatedFiles]);
+  await exec("git", ["diff", "--cached"]);
 
   // commit changes
   const commitMessage = core.getInput("commit-message") || `Release v${version}`;
