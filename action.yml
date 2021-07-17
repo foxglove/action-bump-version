@@ -22,5 +22,5 @@ outputs:
   updated-files:
     description: "Array of paths to updated package.json files"
 runs:
-  using: "node16"
+  using: "node12"
   main: "dist/index.js"

@@ -1,9 +1,26 @@
 var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
@@ -3707,6 +3724,7 @@ var import_semver = __toModule(require_semver2());
 var PrettyError = class extends Error {
 };
 async function main() {
+  var _a, _b;
   const version = sanitizeVersion(import_core.default.getInput("version", { required: true }));
   import_core.default.setOutput("version", version);
   const gitStatus = await execOutput("git", ["status", "--porcelain"]);
@@ -3716,14 +3734,14 @@ async function main() {
 ${gitStatus}`);
   }
   if (import_core.default.getBooleanInput("branch")) {
-    const branchName = import_core.default.getInput("branch-name") ?? `release/v${version}`;
+    const branchName = (_a = import_core.default.getInput("branch-name")) != null ? _a : `release/v${version}`;
     await (0, import_exec.exec)("git", ["checkout", "-B", branchName]);
     import_core.default.setOutput("branch-name", branchName);
   }
   const updatedFiles = await recursiveUpdatePackageVersion(".", version);
   import_core.default.setOutput("updated-files", updatedFiles);
   await (0, import_exec.exec)("git", ["add", ...updatedFiles]);
-  const commitMessage = import_core.default.getInput("commit-message") ?? `Release v${version}`;
+  const commitMessage = (_b = import_core.default.getInput("commit-message")) != null ? _b : `Release v${version}`;
   await (0, import_exec.exec)("git", ["commit", "--message", commitMessage]);
   if (import_core.default.getBooleanInput("push")) {
     await (0, import_exec.exec)("git", ["push", "--set-upstream", "origin", "HEAD"]);
@@ -3731,8 +3749,7 @@ ${gitStatus}`);
 }
 async function execOutput(program, args, options) {
   let output = "";
-  await (0, import_exec.exec)(program, args, {
-    ...options,
+  await (0, import_exec.exec)(program, args, __spreadProps(__spreadValues({}, options), {
     silent: true,
     listeners: {
       stdout: (data) => {
@@ -3742,7 +3759,7 @@ async function execOutput(program, args, options) {
         output += data.toString();
       }
     }
-  });
+  }));
   return output;
 }
 function sanitizeVersion(version) {
