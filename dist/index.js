@@ -3726,7 +3726,7 @@ ${gitStatus}`);
   const commitMessage = import_core.default.getInput("commit-message") ?? `Release v${version}`;
   await (0, import_exec.exec)("git", ["commit", "--message", commitMessage]);
   if (import_core.default.getBooleanInput("push")) {
-    await (0, import_exec.exec)("git", ["push", "origin", "HEAD"]);
+    await (0, import_exec.exec)("git", ["push", "--set-upstream", "origin", "HEAD"]);
   }
 }
 async function execOutput(program, args, options) {

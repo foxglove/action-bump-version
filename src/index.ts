@@ -39,7 +39,7 @@ async function main(): Promise<void> {
 
   // push to origin if requested
   if (core.getBooleanInput("push")) {
-    await exec("git", ["push", "origin", "HEAD"]);
+    await exec("git", ["push", "--set-upstream", "origin", "HEAD"]);
   }
 }
 
