@@ -3763,7 +3763,7 @@ async function execOutput(program, args, options) {
 }
 function sanitizeVersion(version) {
   const result = import_semver.default.valid(version);
-  if (result == void 0) {
+  if (!result) {
     throw new PrettyError(`Invalid version: ${version}`);
   }
   return result;
