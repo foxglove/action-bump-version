@@ -14,9 +14,10 @@
   "scripts": {
     "build": "esbuild --platform=node --bundle --sourcemap --outfile=dist/index.js src/index.ts",
     "watch": "yarn run build --watch",
-    "clean": "rimraf dist",
-    "lint": "tsc && eslint --report-unused-disable-directives --fix .",
-    "lint:ci": "tsc && eslint --report-unused-disable-directives ."
+    "clean": "rimraf dist *.tsbuildinfo",
+    "lint": "eslint --report-unused-disable-directives --fix .",
+    "lint:ci": "eslint --report-unused-disable-directives .",
+    "tsc": "tsc"
   },
   "devDependencies": {
     "@actions/core": "^1.4.0",
