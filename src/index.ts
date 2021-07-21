@@ -41,6 +41,10 @@ async function main(): Promise<void> {
   const commitMessage = core.getInput("commit-message") || `Release v${version}`;
   await exec("git", ["commit", "--message", commitMessage]);
 
+  // save commit hash
+  const commitHash = await execOutput("git", ["rev-parse", "HEAD"]);
+  core.setOutput("sha", commitHash);
+
   // push to origin if requested
   if (core.getBooleanInput("push")) {
     await exec("git", ["push", "--set-upstream", "origin", "HEAD"]);

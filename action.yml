@@ -19,6 +19,8 @@ outputs:
     description: "Normalized version string"
   branch-name:
     description: "Name of release branch if created"
+  sha:
+    description: "Release commit sha"
   updated-files:
     description: "Array of paths to updated package.json files"
 runs:
