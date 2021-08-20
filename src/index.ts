@@ -42,7 +42,7 @@ async function main(): Promise<void> {
   await exec("git", ["commit", "--message", commitMessage]);
 
   // save commit hash
-  const commitHash = await execOutput("git", ["rev-parse", "HEAD"]);
+  const commitHash = (await execOutput("git", ["rev-parse", "HEAD"])).trim();
   core.setOutput("sha", commitHash);
 
   // push to origin if requested
