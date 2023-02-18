@@ -3741,15 +3741,17 @@ ${gitStatus}`);
   if (updatedFiles.length === 0) {
     throw new PrettyError("No package.json files updated");
   }
-  import_core.default.setOutput("updated-files", updatedFiles);
-  await (0, import_exec.exec)("git", ["add", ...updatedFiles]);
-  await (0, import_exec.exec)("git", ["diff", "--cached"]);
-  const commitMessage = import_core.default.getInput("commit-message") || `Release v${version}`;
-  await (0, import_exec.exec)("git", ["commit", "--message", commitMessage]);
-  const commitHash = (await execOutput("git", ["rev-parse", "HEAD"])).trim();
-  import_core.default.setOutput("sha", commitHash);
-  if (import_core.default.getBooleanInput("push")) {
-    await (0, import_exec.exec)("git", ["push", "--set-upstream", "origin", "HEAD"]);
+  if (import_core.default.getBooleanInput("commit")) {
+    import_core.default.setOutput("updated-files", updatedFiles);
+    await (0, import_exec.exec)("git", ["add", ...updatedFiles]);
+    await (0, import_exec.exec)("git", ["diff", "--cached"]);
+    const commitMessage = import_core.default.getInput("commit-message") || `Release v${version}`;
+    await (0, import_exec.exec)("git", ["commit", "--message", commitMessage]);
+    const commitHash = (await execOutput("git", ["rev-parse", "HEAD"])).trim();
+    import_core.default.setOutput("sha", commitHash);
+    if (import_core.default.getBooleanInput("push")) {
+      await (0, import_exec.exec)("git", ["push", "--set-upstream", "origin", "HEAD"]);
+    }
   }
 }
 async function execOutput(program, args, options) {

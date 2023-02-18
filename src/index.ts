@@ -33,21 +33,24 @@ async function main(): Promise<void> {
   if (updatedFiles.length === 0) {
     throw new PrettyError("No package.json files updated");
   }
-  core.setOutput("updated-files", updatedFiles);
-  await exec("git", ["add", ...updatedFiles]);
-  await exec("git", ["diff", "--cached"]);
 
-  // commit changes
-  const commitMessage = core.getInput("commit-message") || `Release v${version}`;
-  await exec("git", ["commit", "--message", commitMessage]);
+  if (core.getBooleanInput("commit")) {
+    core.setOutput("updated-files", updatedFiles);
+    await exec("git", ["add", ...updatedFiles]);
+    await exec("git", ["diff", "--cached"]);
 
-  // save commit hash
-  const commitHash = (await execOutput("git", ["rev-parse", "HEAD"])).trim();
-  core.setOutput("sha", commitHash);
+    // commit changes
+    const commitMessage = core.getInput("commit-message") || `Release v${version}`;
+    await exec("git", ["commit", "--message", commitMessage]);
 
-  // push to origin if requested
-  if (core.getBooleanInput("push")) {
-    await exec("git", ["push", "--set-upstream", "origin", "HEAD"]);
+    // save commit hash
+    const commitHash = (await execOutput("git", ["rev-parse", "HEAD"])).trim();
+    core.setOutput("sha", commitHash);
+
+    // push to origin if requested
+    if (core.getBooleanInput("push")) {
+      await exec("git", ["push", "--set-upstream", "origin", "HEAD"]);
+    }
   }
 }
 
