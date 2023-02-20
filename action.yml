@@ -16,7 +16,7 @@ inputs:
     default: false
   commit:
     description: "Commit changed files"
-    default: false
+    default: true
 outputs:
   version:
     description: "Normalized version string"
