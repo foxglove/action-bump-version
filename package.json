@@ -20,8 +20,8 @@
     "tsc": "tsc"
   },
   "devDependencies": {
-    "@actions/core": "^1.4.0",
-    "@actions/exec": "^1.1.0",
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
     "@foxglove/eslint-plugin": "0.12.0",
     "@foxglove/tsconfig": "1.0.0",
     "@types/jest": "26.0.23",

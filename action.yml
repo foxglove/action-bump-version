@@ -14,6 +14,9 @@ inputs:
   push:
     description: "Push to remote after committing new version"
     default: false
+  commit:
+    description: "Commit changed files"
+    default: true
 outputs:
   version:
     description: "Normalized version string"
@@ -24,5 +27,5 @@ outputs:
   updated-files:
     description: "Array of paths to updated package.json files"
 runs:
-  using: "node12"
+  using: "node16"
   main: "dist/index.js"
